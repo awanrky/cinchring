@@ -2,3 +2,4 @@
 .mvn/
 target/
 cinchring.iml
+.vagrant
