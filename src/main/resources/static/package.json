@@ -1,0 +1,21 @@
+{
+  "name": "cinchring",
+  "version": "0.0.1",
+  "description": "",
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:awanrky/cinchring"
+  },
+  "keywords": [
+    "horses!"
+  ],
+  "author": "Mark Ott",
+  "license": "MIT",
+  "homepage": "https://github.com/awanrky/cinchring",
+  "dependencies": {
+    "react-tools": "^0.13.3"
+  },
+  "devDependencies": {
+    "bower": "^1.3.12"
+  }
+}

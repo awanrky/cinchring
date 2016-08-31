@@ -1,0 +1,30 @@
+{
+  "name": "cinchring",
+  "version": "0.0.1",
+  "homepage": "https://github.com/awanrky/cinchring",
+  "authors": [
+    "Mark Ott <markgilbertott@gmail.com"
+  ],
+  "description": "",
+  "main": "main.js",
+  "moduleType": [
+    "amd"
+  ],
+  "keywords": [
+    "horses!"
+  ],
+  "license": "MIT",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "requirejs": "~2.1.20",
+    "rest": "~1.3.1",
+    "requirejs-react-jsx": "~0.14.2"
+  }
+}
