@@ -20,6 +20,9 @@ public class Reading {
 	@Column(name="VALUE")
 	private String value;
 
+	@Column(name="UOM")
+	private String uom;
+
 	public Long getId() {
 		return id;
 	}
@@ -34,6 +37,14 @@ public class Reading {
 
 	public void setValue(String value) {
 		this.value = value;
+	}
+
+	public String getUom() {
+		return uom;
+	}
+
+	public void setUom(String uom) {
+		this.uom = uom;
 	}
 
 	@Override

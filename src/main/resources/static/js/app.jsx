@@ -9,35 +9,35 @@ define(function (require) {
     // tag::app[]
     var App = React.createClass({
         getInitialState: function () {
-            return ({employees: []});
+            return ({readings: []});
         },
         componentDidMount: function () {
-            client({method: 'GET', path: '/api/employees'}).done(response => {
-                this.setState({employees: response.entity._embedded.employees});
+            client({method: 'GET', path: '/api/readings'}).done(response => {
+                this.setState({readings: response.entity._embedded.readings});
             });
         },
         render: function () {
             return (
-                <EmployeeList employees={this.state.employees}/>
+                <Readings readings={this.state.readings}/>
             )
         }
     })
     // end::app[]
 
     // tag::employee-list[]
-    var EmployeeList = React.createClass({
+    var Readings = React.createClass({
         render: function () {
-            var employees = this.props.employees.map(employee =>
-                <Employee key={employee._links.self.href} employee={employee}/>
+            var readings = this.props.readings.map(reading =>
+                <Reading key={reading._links.self.href} reading={reading}/>
             );
             return (
                 <table>
                     <tr>
-                        <th>First Name</th>
-                        <th>Last Name</th>
-                        <th>Description</th>
+                        <th>Id</th>
+                        <th>Value</th>
+                        <th>Unit of Measure</th>
                     </tr>
-                    {employees}
+                    {readings}
                 </table>
             )
         }
@@ -45,13 +45,13 @@ define(function (require) {
     // end::employee-list[]
 
     // tag::employee[]
-    var Employee = React.createClass({
+    var Reading = React.createClass({
         render: function () {
             return (
                 <tr>
-                    <td>{this.props.employee.firstName}</td>
-                    <td>{this.props.employee.lastName}</td>
-                    <td>{this.props.employee.description}</td>
+                    <td>{this.props.reading.id}</td>
+                    <td>{this.props.reading.value}</td>
+                    <td>{this.props.reading.uom}</td>
                 </tr>
             )
         }
