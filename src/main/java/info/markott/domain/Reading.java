@@ -1,9 +1,8 @@
 package info.markott.domain;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import sun.security.util.UntrustedCertificates;
+
+import javax.persistence.*;
 
 /**
  * Created by mark on 8/16/16.
@@ -20,8 +19,9 @@ public class Reading {
 	@Column(name="VALUE")
 	private String value;
 
-	@Column(name="UOM")
-	private String uom;
+	@ManyToOne(cascade = CascadeType.ALL)
+	@JoinColumn(name="UOM_ID")
+	private UnitOfMeasure uom;
 
 	public Long getId() {
 		return id;
@@ -39,11 +39,11 @@ public class Reading {
 		this.value = value;
 	}
 
-	public String getUom() {
+	public UnitOfMeasure getUom() {
 		return uom;
 	}
 
-	public void setUom(String uom) {
+	public void setUom(UnitOfMeasure uom) {
 		this.uom = uom;
 	}
 

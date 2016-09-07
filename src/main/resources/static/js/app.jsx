@@ -13,7 +13,7 @@ define(function (require) {
         },
         componentDidMount: function () {
             client({method: 'GET', path: '/api/readings'}).done(response => {
-                this.setState({readings: response.entity._embedded.readings});
+                this.setState({readings: response.entity});
             });
         },
         render: function () {
@@ -28,7 +28,7 @@ define(function (require) {
     var Readings = React.createClass({
         render: function () {
             var readings = this.props.readings.map(reading =>
-                <Reading key={reading._links.self.href} reading={reading}/>
+                <Reading reading={reading}/>
             );
             return (
                 <table>
@@ -51,7 +51,7 @@ define(function (require) {
                 <tr>
                     <td>{this.props.reading.id}</td>
                     <td>{this.props.reading.value}</td>
-                    <td>{this.props.reading.uom}</td>
+                    <td>{this.props.reading.uom.name}</td>
                 </tr>
             )
         }
