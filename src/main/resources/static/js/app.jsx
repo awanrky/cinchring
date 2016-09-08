@@ -28,7 +28,7 @@ define(function (require) {
     var Readings = React.createClass({
         render: function () {
             var readings = this.props.readings.map(reading =>
-                <Reading reading={reading}/>
+                <Reading key={reading.id} reading={reading}/>
             );
             return (
                 <table>
