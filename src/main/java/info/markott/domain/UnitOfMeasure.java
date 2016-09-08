@@ -1,7 +1,6 @@
 package info.markott.domain;
 
 import javax.persistence.*;
-import java.time.ZonedDateTime;
 import java.util.Date;
 
 /**

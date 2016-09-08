@@ -29,10 +29,6 @@ public class ReadingController {
 	@Inject
 	UnitOfMeasureRepository unitOfMeasureRepository;
 
-//	@RequestMapping(value = "", method = RequestMethod.GET)
-//	public Iterable<Reading> getAllReadings() {
-//		return readingRepository.findAll();
-//	}
 
 	@RequestMapping(value="", method = RequestMethod.GET)
 	public ResponseEntity<Iterable<Reading>> getAllReadings() {
@@ -61,9 +57,4 @@ public class ReadingController {
 		return new ResponseEntity<>(null, responseHeaders, HttpStatus.CREATED);
 	}
 
-//
-//	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
-//	public Reading getReading(@PathVariable String id) {
-//		return readingRepository.findReadingById(id);
-//	}
 }
