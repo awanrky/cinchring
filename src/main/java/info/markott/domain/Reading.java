@@ -1,8 +1,7 @@
 package info.markott.domain;
 
-import sun.security.util.UntrustedCertificates;
-
 import javax.persistence.*;
+import java.util.Date;
 
 /**
  * Created by mark on 8/16/16.
@@ -22,6 +21,19 @@ public class Reading {
 	@ManyToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name="UOM_ID")
 	private UnitOfMeasure uom;
+
+	private Date createdOn;
+	private Date updatedOn;
+
+	@PrePersist
+	protected void onCreate() {
+		createdOn = new Date();
+	}
+
+	@PreUpdate
+	protected void onUpdate() {
+		updatedOn = new Date();
+	}
 
 	public Long getId() {
 		return id;
@@ -50,5 +62,13 @@ public class Reading {
 	@Override
 	public String toString() {
 		return getId() + ", " + getValue();
+	}
+
+	public Date getCreatedOn() {
+		return createdOn;
+	}
+
+	public Date getUpdatedOn() {
+		return updatedOn;
 	}
 }
