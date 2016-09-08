@@ -1,7 +1,9 @@
 package info.markott.controller;
 
 import info.markott.domain.Reading;
+import info.markott.domain.UnitOfMeasure;
 import info.markott.repository.ReadingRepository;
+import info.markott.repository.UnitOfMeasureRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -11,6 +13,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import javax.inject.Inject;
 import java.net.URI;
+import java.util.Optional;
 
 /**
  * Created by mark on 9/5/16.
@@ -22,6 +25,9 @@ public class ReadingController {
 
 	@Inject
 	private ReadingRepository readingRepository;
+
+	@Inject
+	UnitOfMeasureRepository unitOfMeasureRepository;
 
 //	@RequestMapping(value = "", method = RequestMethod.GET)
 //	public Iterable<Reading> getAllReadings() {
@@ -36,6 +42,13 @@ public class ReadingController {
 
 	@RequestMapping(value="", method=RequestMethod.POST)
 	public ResponseEntity<?> createReading(@RequestBody Reading reading) {
+
+		Optional<UnitOfMeasure> unitOfMeasure = unitOfMeasureRepository.findByName(reading.getUom().getName());
+
+		if (unitOfMeasure.isPresent()) {
+			reading.setUom(unitOfMeasure.get());
+		}
+
 		reading = readingRepository.save(reading);
 
 		HttpHeaders responseHeaders = new HttpHeaders();
