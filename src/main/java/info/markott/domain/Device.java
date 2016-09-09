@@ -123,4 +123,12 @@ public class Device {
 			setCreatedBy(device);
 		}
 	}
+
+	public Device getUpdatedBy() {
+		return updatedBy;
+	}
+
+	public void setUpdatedBy(Device updatedBy) {
+		this.updatedBy = updatedBy;
+	}
 }

@@ -57,7 +57,6 @@ public class ReadingController {
 		} else {
 			deviceRepository.save(reading.getDevice());
 			device = Optional.of(reading.getDevice());
-//			device.get().setCreatedByIfMissing(device.get());
 		}
 
 		if (unitOfMeasure.isPresent()) {
