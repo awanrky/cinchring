@@ -22,7 +22,17 @@ public class Reading {
 	@JoinColumn(name="UOM_ID")
 	private UnitOfMeasure uom;
 
+	@ManyToOne(cascade = CascadeType.ALL)
+	@JoinColumn(name="DEVICE_ID", nullable = false)
+	private Device device;
+
+	@ManyToOne(cascade = CascadeType.ALL)
+	@JoinColumn(name="COMPONENT_ID", nullable = false)
+	private Component component;
+
+	@Temporal(TemporalType.TIMESTAMP)
 	private Date createdOn;
+	@Temporal(TemporalType.TIMESTAMP)
 	private Date updatedOn;
 
 	@PrePersist
@@ -70,5 +80,21 @@ public class Reading {
 
 	public Date getUpdatedOn() {
 		return updatedOn;
+	}
+
+	public Device getDevice() {
+		return device;
+	}
+
+	public void setDevice(Device device) {
+		this.device = device;
+	}
+
+	public Component getComponent() {
+		return component;
+	}
+
+	public void setComponent(Component component) {
+		this.component = component;
 	}
 }

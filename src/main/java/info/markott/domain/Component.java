@@ -4,17 +4,16 @@ import javax.persistence.*;
 import java.util.Date;
 
 /**
- * Created by mark on 9/5/16.
- *
+ * Created by mark on 9/9/16.
  */
 
-
 @Entity
-public class UnitOfMeasure {
+public class Component {
 
 	@Id
 	@GeneratedValue
-	private int id;
+	@Column(name="ID")
+	private Integer id;
 
 	@Column(unique=true, nullable = false)
 	private String name;
@@ -30,20 +29,6 @@ public class UnitOfMeasure {
 	@JoinColumn(name="CREATED_BY", nullable = false)
 	private Device createdBy;
 
-	public UnitOfMeasure() {
-
-	}
-
-	public UnitOfMeasure(String name) {
-		this();
-		setName(name);
-	}
-
-	public UnitOfMeasure(String name, String description) {
-		this(name);
-		setDescription(description);
-	}
-
 	@PrePersist
 	protected void onCreate() {
 		createdOn = new Date();
@@ -54,11 +39,19 @@ public class UnitOfMeasure {
 		updatedOn = new Date();
 	}
 
-	public int getId() {
+	public Component() {
+
+	}
+
+	public Component(String name) {
+		setName(name);
+	}
+
+	public Integer getId() {
 		return id;
 	}
 
-	public void setId(int id) {
+	public void setId(Integer id) {
 		this.id = id;
 	}
 
@@ -68,6 +61,14 @@ public class UnitOfMeasure {
 
 	public void setName(String name) {
 		this.name = name;
+	}
+
+	public Date getCreatedOn() {
+		return createdOn;
+	}
+
+	public Date getUpdatedOn() {
+		return updatedOn;
 	}
 
 	public String getDescription() {
@@ -82,8 +83,8 @@ public class UnitOfMeasure {
 		return createdBy;
 	}
 
-	public void setCreatedBy(Device device) {
-		this.createdBy = device;
+	public void setCreatedBy(Device createdBy) {
+		this.createdBy = createdBy;
 	}
 
 	/**
@@ -100,12 +101,4 @@ public class UnitOfMeasure {
 		}
 	}
 
-	public Date getCreatedOn() {
-		return createdOn;
-	}
-
-	public Date getUpdatedOn() {
-		return updatedOn;
-	}
 }
-
