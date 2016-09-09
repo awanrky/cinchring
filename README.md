@@ -20,7 +20,6 @@ Cinchring
             * chmod 600 .ssh/authorized_keys
             * chown -R vagrant:vagrant .ssh
 * connect to mysql database instance on instance of vagrant machine user cinchring pw cinchring
-* create a new database for cinchring 'create database cinchring;'
 * change password for cinchring user
 * edit application.properties giving the new password for the cinchring user
 * ssh into the vagrant instance 'vagrant ssh'
