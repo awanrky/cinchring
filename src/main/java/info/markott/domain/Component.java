@@ -5,6 +5,11 @@ import java.util.Date;
 
 /**
  * Created by mark on 9/9/16.
+ *
+ * A component is part of a device.  For instance an arduino (device) could have many
+ * different sensors (components) on it.  One for reading temperature, one for reading
+ * light level, etc.
+ *
  */
 
 @Entity

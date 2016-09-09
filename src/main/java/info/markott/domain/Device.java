@@ -49,13 +49,9 @@ public class Device {
 		createdOn = new Date();
 	}
 
-	@PostPersist
-	protected void onCreated() {
-		if (createdBy == null) {
-			createdBy = this;
-			updatedBy = this;
-		}
-	}
+//	@PostPersist
+//	protected void onCreated() {
+//	}
 
 	@PreUpdate
 	protected void onUpdate() {

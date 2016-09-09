@@ -6,6 +6,9 @@ import java.util.Date;
 /**
  * Created by mark on 9/5/16.
  *
+ * UnitOfMeasure should be self-explanatory.  Is the reading that uses this uom measured
+ * in feet?  degrees celcius?  revolutions per minute?
+ *
  */
 
 

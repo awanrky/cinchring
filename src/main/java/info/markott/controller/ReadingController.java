@@ -38,13 +38,31 @@ public class ReadingController {
 	@Inject
 	ComponentRepository componentRepository;
 
-
+	/**
+	 * returns a JSON response containing all the readings in the database.
+	 * @return
+	 */
 	@RequestMapping(value="", method = RequestMethod.GET)
 	public ResponseEntity<Iterable<Reading>> getAllReadings() {
 		Iterable<Reading> allReadings = readingRepository.findAll();
 		return new ResponseEntity<>(allReadings, HttpStatus.OK);
 	}
 
+	/**
+	 * create a new reading
+	 *
+	 * the body of the post should be valid JSON with the following information:
+	 *
+	 * {
+	 *     "value": "(String) the reading's value goes here",
+	 *     "device": "(String or Object) the name of the device.  Can be an object with name and description properties, but only name is used unless a device with this name does not yet exist",
+	 *     "component": "(String of Object) the name of the component.  Can be object for a component that does not yet exist",
+	 *     "uom": "(String or Object) the name of the measurement used for obtaining the value.  Can be an object for a uom that does not yet exist"
+	 * }
+	 *
+	 * @param reading
+	 * @return
+	 */
 	@RequestMapping(value="", method=RequestMethod.POST)
 	public ResponseEntity<?> createReading(@RequestBody Reading reading) {
 
