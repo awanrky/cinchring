@@ -1,4 +1,6 @@
-Cinchring
+__Cinchring__
+
+*To run the database and web server*
 
 * Run 'vagrant up'
 * if this is the first time running this box, you may need to manually fix a network problem
@@ -26,3 +28,13 @@ Cinchring
 * cd /vagrant
 * run './mvnw spring-boot:run' to build and run the web server
 * (or you can run './mvnw clean package' to build an executable jar, and then run 'java -jar target/cinchring-0.0.1-SNAPSHOT.jar' to run the web server
+
+
+*To manage and edit arduinos*
+
+* Each arduino's code and other information is kept in the project's arduino directory, under a directory for arduino name the same as the arduino
+* Any library code used should be kept in the arduino/library directory and committed to the repo
+* The arduino IDE wants code and libraries to be in the user's home, inside an Arduino directory so you have several options, two of are
+    1. copy everything in the project's arduino directory into your home Arduino directory to use in the arduino IDE and back to the project to commit
+    2. make a symbolic link (for example: ln -s /home/mark/projects/cinchring/arduino /home/mark/Arduino) so that the code stays in the project's arduino directory, but it also appears to be in the home Arduino directory
+* You can use your favorite editor to edit the code, but use the IDE to upload to the arduinos by turn on the external editor option in the arduino IDE settings
