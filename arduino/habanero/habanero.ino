@@ -1,6 +1,9 @@
 
 #include <Process.h>
 
+#include <Adafruit_Sensor.h>
+#include <Adafruit_BMP085_U.h>
+
 const int ledPin = 13; // the pin that the LED is attached to
 
 #include "DHT.h"
@@ -8,27 +11,43 @@ const int ledPin = 13; // the pin that the LED is attached to
 #define ARDUINO_NAME "habanero"
 #define POST_READING_URL "http://192.168.1.8:8080/api/readings"
 
-#define DELAY 60000
+#define DELAY 10000
+#define SENSOR_DELAY 1000
 
-#define DHTPIN 2     // what digital pin we're connected to
+#define DHTPIN 4     // what digital pin we're connected to
 #define DHTTYPE DHT22   // DHT 22  (AM2302), AM2321
 
 DHT dht(DHTPIN, DHTTYPE);
 
+Adafruit_BMP085_Unified bmp = Adafruit_BMP085_Unified(10085);
 
 void setup() {
 
-  Bridge.begin();
+    Serial.println("Starting...");
 
-  // initialize the LED pin as an output:
-  pinMode(ledPin, OUTPUT);
-  
-  dht.begin();
+    Bridge.begin();
+
+    // initialize the LED pin as an output:
+    pinMode(ledPin, OUTPUT);
+
+    dht.begin();
+
+    /* Initialise the sensor */
+    if(!bmp.begin())
+    {
+      /* There was a problem detecting the BMP085 ... check your connections */
+      Serial.print("Ooops, no BMP085 detected ... Check your wiring or I2C ADDR!");
+      while(1);
+    }
 }
 
 void loop() {
 
     readDht();
+
+    delay(SENSOR_DELAY);
+
+    readBmp180();
 
     delay(DELAY);
 
@@ -40,6 +59,29 @@ void ledOn() {
 
 void ledOff() {
     digitalWrite(ledPin, LOW);
+}
+
+void readBmp180() {
+      /* Get a new sensor event */
+      sensors_event_t event;
+      bmp.getEvent(&event);
+
+      /* Display the results (barometric pressure is measure in hPa) */
+      if (event.pressure)
+      {
+        /* Display atmospheric pressure in hPa */
+//        Serial.print("Pressure: "); Serial.print(event.pressure); Serial.println(" hPa");
+          postReading(event.pressure, "hPa", "BMP180");
+      }
+      else
+      {
+        Serial.println("BMP180 - Sensor error");
+      }
+
+      float temperature;
+      bmp.getTemperature(&temperature);
+
+      postReading(temperature, "degrees-celsius", "BMP180");
 }
 
 void readDht() {
