@@ -9,7 +9,7 @@ const int ledPin = 13; // the pin that the LED is attached to
 #include "DHT.h"
 
 #define ARDUINO_NAME "habanero"
-#define POST_READING_URL "http://192.168.1.8:8080/api/readings"
+#define POST_READING_URL "http://192.168.1.14:8080/api/readings"
 
 #define DELAY 60000
 #define SENSOR_DELAY 1000
