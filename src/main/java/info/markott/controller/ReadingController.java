@@ -16,15 +16,21 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import javax.inject.Inject;
 import java.net.URI;
+import java.time.Instant;
+import java.time.format.DateTimeFormatter;
+import java.util.Date;
 import java.util.Optional;
 
 /**
  * Created by mark on 9/5/16.
  */
 
+
 @RestController
 @RequestMapping("/api/readings")
 public class ReadingController {
+
+	private final String DEGREES_CELSIUS = "degrees-celsius";
 
 	@Inject
 	private ReadingRepository readingRepository;
@@ -46,6 +52,17 @@ public class ReadingController {
 	public ResponseEntity<Iterable<Reading>> getAllReadings() {
 		Iterable<Reading> allReadings = readingRepository.findAll();
 		return new ResponseEntity<>(allReadings, HttpStatus.OK);
+	}
+
+	@RequestMapping(value="/degrees-celsius/{startDate}/{endDate}", method = RequestMethod.GET)
+	public ResponseEntity<Iterable<Reading>> getDegreesCelsiusReadings(@PathVariable String startDate, @PathVariable String endDate) {
+		DateTimeFormatter f = DateTimeFormatter.ISO_INSTANT;
+		Instant startInstant = Instant.from(f.parse(startDate));
+		Instant endInstant = Instant.from(f.parse(endDate));
+		UnitOfMeasure unitOfMeasure = getUnitOfMeasure(DEGREES_CELSIUS);
+
+		Iterable<Reading> readings = readingRepository.findByUom(unitOfMeasure, Date.from(startInstant), Date.from(endInstant));
+		return new ResponseEntity<>(readings, HttpStatus.OK);
 	}
 
 	/**
@@ -111,6 +128,15 @@ public class ReadingController {
 		}
 
 		return unitOfMeasureRepository.findByName(uom.getName());
+	}
+
+	private UnitOfMeasure getUnitOfMeasure(String name) {
+		Optional<UnitOfMeasure> unitOfMeasureOptional = unitOfMeasureRepository.findByName(name);
+
+		if (!unitOfMeasureOptional.isPresent()) {
+			return null;
+		}
+		return unitOfMeasureOptional.get();
 	}
 
 	private Optional<Device> getDeviceForReading(Reading reading) {
