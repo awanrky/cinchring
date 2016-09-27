@@ -1,5 +1,8 @@
 package info.markott.domain;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonView;
+
 import javax.persistence.*;
 import java.util.Date;
 
@@ -7,7 +10,7 @@ import java.util.Date;
  * Created by mark on 9/5/16.
  *
  * UnitOfMeasure should be self-explanatory.  Is the reading that uses this uom measured
- * in feet?  degrees celcius?  revolutions per minute?
+ * in feet?  degrees celsius?  revolutions per minute?
  *
  */
 
@@ -15,20 +18,27 @@ import java.util.Date;
 @Entity
 public class UnitOfMeasure {
 
+	@JsonView(Views.Full.class)
 	@Id
 	@GeneratedValue
 	private int id;
 
+	@JsonView(Views.Compact.class)
 	@Column(unique=true, nullable = false)
 	private String name;
 
+	@JsonInclude(JsonInclude.Include.NON_NULL)
+	@JsonView(Views.Compact.class)
 	private String description;
 
+	@JsonView(Views.Full.class)
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date createdOn;
+	@JsonView(Views.Full.class)
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date updatedOn;
 
+	@JsonView(Views.Full.class)
 	@ManyToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name="CREATED_BY", nullable = false)
 	private Device createdBy;

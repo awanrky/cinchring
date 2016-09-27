@@ -1,5 +1,8 @@
 package info.markott.domain;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonView;
+
 import javax.persistence.*;
 import java.util.Date;
 
@@ -15,21 +18,29 @@ import java.util.Date;
 @Entity
 public class Component {
 
+	@JsonView(Views.Full.class)
 	@Id
 	@GeneratedValue
 	@Column(name="ID")
 	private Integer id;
 
+	@JsonView(Views.Compact.class)
 	@Column(unique=true, nullable = false)
 	private String name;
 
+	@JsonInclude(JsonInclude.Include.NON_NULL)
+	@JsonView(Views.Compact.class)
 	private String description;
 
+	@JsonView(Views.Full.class)
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date createdOn;
+
+	@JsonView(Views.Full.class)
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date updatedOn;
 
+	@JsonView(Views.Full.class)
 	@ManyToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name="CREATED_BY", nullable = false)
 	private Device createdBy;

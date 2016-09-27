@@ -1,15 +1,16 @@
 package info.markott.controller;
 
-import info.markott.domain.Component;
-import info.markott.domain.Device;
-import info.markott.domain.Reading;
-import info.markott.domain.UnitOfMeasure;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import info.markott.domain.*;
 import info.markott.repository.ComponentRepository;
 import info.markott.repository.DeviceRepository;
 import info.markott.repository.ReadingRepository;
 import info.markott.repository.UnitOfMeasureRepository;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
@@ -55,14 +56,15 @@ public class ReadingController {
 	}
 
 	@RequestMapping(value="/degrees-celsius/{startDate}/{endDate}", method = RequestMethod.GET)
-	public ResponseEntity<Iterable<Reading>> getDegreesCelsiusReadings(@PathVariable String startDate, @PathVariable String endDate) {
+	public ResponseEntity getDegreesCelsiusReadings(@PathVariable String startDate, @PathVariable String endDate) {
 		DateTimeFormatter f = DateTimeFormatter.ISO_INSTANT;
 		Instant startInstant = Instant.from(f.parse(startDate));
 		Instant endInstant = Instant.from(f.parse(endDate));
 		UnitOfMeasure unitOfMeasure = getUnitOfMeasure(DEGREES_CELSIUS);
 
 		Iterable<Reading> readings = readingRepository.findByUom(unitOfMeasure, Date.from(startInstant), Date.from(endInstant));
-		return new ResponseEntity<>(readings, HttpStatus.OK);
+
+		return Views.getJsonResponseWithView(Views.Compact.class, readings);
 	}
 
 	/**
